@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      run: |
+    - run: |
         git fetch --unshallow
         git fetch --tags origin
         git remote set-branches --add origin master
