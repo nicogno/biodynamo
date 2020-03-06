@@ -22,6 +22,11 @@ jobs:
         brew install libomp tbb open-mpi git pyenv llvm wget cmake ninja p7zip
         eval "$(pyenv init -)"
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
+        xcode-select -p
+        xcode-select -r
+        xcode-select -p
+        xcrun --show-sdk-version
+        xcrun --show-sdk-path
 
     - name: Build BioDynaMo
       shell: bash
