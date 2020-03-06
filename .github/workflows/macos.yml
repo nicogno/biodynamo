@@ -12,6 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      run: |
+        git fetch --unshallow
+        git fetch --tags origin
+        git remote set-branches --add origin master
 
     - name: Install dependencies
       run: |
