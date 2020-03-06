@@ -28,14 +28,17 @@ jobs:
         xcrun --show-sdk-version
         xcrun --show-sdk-path
         xcrun --sdk macosx10.15 --show-sdk-path
+        xcrun --show-sdk-path
 
     - name: Build BioDynaMo
       shell: bash
       run: |
+        xcrun --show-sdk-path
+        xcrun --sdk macosx10.15 --show-sdk-path
         cmake -G Ninja -Dopencl=ON -Dparaview=ON \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ \
-          -DCMAKE_CXX_FLAGS="-isysroot `xcrun --show-sdk-path`" \
+          -DCMAKE_CXX_FLAGS="-isysroot `xcrun --sdk macosx10.15 --show-sdk-path`" \
           -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang \
           -DCMAKE_EXPORT_COMPILE_COMMANDS=TRUE \
           -DCMAKE_EXE_LINKER_FLAGS_INIT=-L/usr/local/opt/llvm/lib \
