@@ -23,10 +23,11 @@ jobs:
         eval "$(pyenv init -)"
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
         xcode-select -p
-        xcode-select -r
+        sudo xcode-select -r
         xcode-select -p
         xcrun --show-sdk-version
         xcrun --show-sdk-path
+        xcrun --sdk macosx10.15 --show-sdk-path
 
     - name: Build BioDynaMo
       shell: bash
