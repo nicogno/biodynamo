@@ -25,7 +25,7 @@ jobs:
         yum -y install centos-release-scl epel-release
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install wget libXt-devel libXext-devel ninja-build make \
-          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel git
+          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel git2u-all
         yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
@@ -39,8 +39,6 @@ jobs:
     - name: Get BioDynaMo git version history
       shell: bash
       run: |
-        export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-        git init
         git fetch --unshallow
         git fetch --tags origin
         git remote set-branches --add origin master
