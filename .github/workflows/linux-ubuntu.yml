@@ -1,0 +1,73 @@
+name: Linux Ubuntu
+
+on:
+  pull_request:
+  push:
+  release:
+    types: published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git fetch --unshallow
+        git fetch --tags origin
+        git remote set-branches --add origin master
+
+    - name: Install dependencies
+      run: |
+        apt-get install -y wget cmake make gcc g++ \
+          libopenmpi-dev libomp-dev libnuma-dev freeglut3-dev \
+          libpthread-stubs0-dev
+        apt-get install -y libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+          libsqlite3-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+        #curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
+        #chmod +x cmake-3.16.4-Linux-x86_64.sh
+        #./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
+        apt-get install -y p7zip p7zip-rar p7zip-full
+        curl https://pyenv.run | bash
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init -)"
+        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
+        cmake --version
+
+    - name: Build BioDynaMo
+      shell: bash
+      run: |
+        cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
+          -DCMAKE_BUILD_TYPE=Release \
+          -B build
+        cmake --build build --parallel --config Release
+
+    - name: Test BioDynaMo
+      shell: bash
+      run: |
+        . bin/thisbdm.sh
+        bin/biodynamo-unit-tests
+      working-directory: build
+
+    - name: Create BioDynaMo archive
+      shell: bash
+      run: |
+        mkdir artifact
+        7z a artifact/biodynamo-mac.zip ./build
+
+    - name: Upload BioDynaMo archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: biodynamo-binary-archives
+        path: artifact
+
+    - name: Upload release asset
+      if: github.event.action == 'published'
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./artifact/biodynamo-mac.zip
+        asset_name: biodynamo-mac.zip
+        asset_content_type: application/zip
