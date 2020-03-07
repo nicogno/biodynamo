@@ -25,7 +25,9 @@ jobs:
         yum -y install centos-release-scl epel-release
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install wget libXt-devel libXext-devel ninja-build make \
-          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel git2u-all
+          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel
+        yum remove git*
+        yum -y install  git2u-all
         yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
