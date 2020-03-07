@@ -15,19 +15,19 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        #curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
-        #chmod +x cmake-3.16.4-Linux-x86_64.sh
-        #./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
+        curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
+        chmod +x cmake-3.16.4-Linux-x86_64.sh
+        ./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
         curl -L -O https://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/p7zip-16.02-10.el7.x86_64.rpm
         curl -L -O https://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/p7zip-plugins-16.02-10.el7.x86_64.rpm
         rpm -U --quiet p7zip-16.02-10.el7.x86_64.rpm
         rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
-        yum -y install centos-release-scl epel-release
-        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-        yum -y install wget cmake3 libXt-devel libXext-devel \
+        sudo yum -y install centos-release-scl epel-release
+        sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        sudo yum -y install wget libXt-devel libXext-devel \
           devtoolset-7-gcc* numactl-devel \
           openmpi3-devel freeglut-devel git
-        yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
+        sudo yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
         export PATH="$HOME/.pyenv/bin:$PATH"

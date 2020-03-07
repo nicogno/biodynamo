@@ -19,15 +19,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apt-get install -y wget cmake make gcc g++ \
+        sudo apt-get install -y wget make gcc g++ \
           libopenmpi-dev libomp-dev libnuma-dev freeglut3-dev \
           libpthread-stubs0-dev
-        apt-get install -y libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+        sudo apt-get install -y libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
           libsqlite3-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
-        #curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
-        #chmod +x cmake-3.16.4-Linux-x86_64.sh
-        #./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
-        apt-get install -y p7zip p7zip-rar p7zip-full
+        curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
+        chmod +x cmake-3.16.4-Linux-x86_64.sh
+        ./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
+        sudo apt-get install -y p7zip p7zip-rar p7zip-full
         curl https://pyenv.run | bash
         export PATH="$HOME/.pyenv/bin:$PATH"
         eval "$(pyenv init -)"
