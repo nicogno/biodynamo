@@ -11,25 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y libopenmpi-dev libomp5 libomp-dev libnuma-dev freeglut3-dev \
+          libreadline-dev libsqlite3-dev tk-dev python-openssl ninja
+        curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
+        chmod +x cmake-3.16.4-Linux-x86_64.sh
+        sudo ./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
+        curl https://pyenv.run | bash
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init -)"
+        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
+
     - uses: actions/checkout@v2
     - run: |
         git fetch --unshallow
         git fetch --tags origin
         git remote set-branches --add origin master
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get install -y libopenmpi-dev libomp5 libomp-dev libnuma-dev freeglut3-dev \
-          libreadline-dev libsqlite3-dev tk-dev python-openssl
-        curl -L -O https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh
-        chmod +x cmake-3.16.4-Linux-x86_64.sh
-        sudo ./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
-        sudo apt-get install -y p7zip p7zip-rar p7zip-full
-        curl https://pyenv.run | bash
-        export PATH="$HOME/.pyenv/bin:$PATH"
-        eval "$(pyenv init -)"
-        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
-        cmake --version
 
     - name: Build BioDynaMo
       shell: bash
