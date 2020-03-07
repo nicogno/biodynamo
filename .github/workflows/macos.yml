@@ -50,8 +50,7 @@ jobs:
         mkdir artifact
         7z a artifact/biodynamo-mac.zip ./build
 
-    # Upload BioDynaMo binary archive as an artifact
-    - name: Upload artifact
+    - name: Upload BioDynaMo archive
       uses: actions/upload-artifact@v1
       with:
         name: biodynamo-binary-archives
