@@ -8,7 +8,7 @@ if (APPLE)
   EXECUTE_PROCESS(COMMAND sw_vers "-productVersion"
                   COMMAND cut -d . -f 1-2
                   OUTPUT_VARIABLE MACOS_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-  set(DETECTED_OS_VERS macos-${MACOS_VERSION})
+  set(DETECTED_OS_VERS ${DETECTED_OS}-${MACOS_VERSION})
 else()
   set(DETECTED_OS_VERS ${DETECTED_OS})
 endif()

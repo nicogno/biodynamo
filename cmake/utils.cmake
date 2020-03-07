@@ -83,10 +83,8 @@ function(verify_ROOT)
         # to be properly sourced prior to invoking CMake (CMake cannot do this for us, because it requires
         # reverting the previous find_package() call, which is not possible.)
         if(NOT ROOT_cxx14_FOUND)
-          set(ROOT_TAR_FILE root_v6-18-04_${DETECTED_OS}.tar.gz PARENT_SCOPE)
           message(FATAL_ERROR "The ROOT installation found in ${ROOTSYS} is not C++14 compliant. "
-            "Please download a compatible ROOT version from http://cern.ch/biodynamo-lfs/third-party/${ROOT_TAR_FILE}, "
-            "and source bin/thisroot.sh prior to installing BioDynaMo. For more information: https://biodynamo.github.io/dev/build/#use-a-custom-paraviewroot-installation")
+            "Please unset ROOTSYS and re-run cmake so that a compatible version of ROOT will be downloaded.")
         endif()
 
         if (NOT DEFINED ROOTSYS OR NOT DEFINED ${ROOTSYS})
