@@ -24,7 +24,7 @@ jobs:
         rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
         yum -y install centos-release-scl epel-release
         yum -y install wget libXt-devel libXext-devel ninja-build make \
-          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel
+          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel lsb_release
         yum -y install @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
@@ -35,7 +35,6 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
-        git --version
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
