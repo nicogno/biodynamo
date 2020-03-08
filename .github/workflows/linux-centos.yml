@@ -25,16 +25,17 @@ jobs:
         yum -y install centos-release-scl epel-release
         yum -y install wget libXt-devel libXext-devel ninja-build make \
           devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel
-        yum remove git
-        yum remove perl-Git
-        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-        yum install -y git222-all
         yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
         export PATH="$HOME/.pyenv/bin:$PATH"
         eval "$(pyenv init -)"
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
+        pyenv shell 3.6.9
+        yum remove git*
+        yum remove perl-Git*
+        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        yum install -y git222-all
         git --version
 
     - name: Checkout BioDynaMo
