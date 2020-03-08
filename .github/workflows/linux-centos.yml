@@ -37,6 +37,8 @@ jobs:
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
         scl enable devtoolset-8 bash
+        which g++
+        g++ -v
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
@@ -55,6 +57,8 @@ jobs:
     - name: Build BioDynaMo
       shell: bash
       run: |
+        which g++
+        g++ -v
         cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
           -DCMAKE_BUILD_TYPE=Release \
           -B build
