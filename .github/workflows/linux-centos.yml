@@ -35,8 +35,6 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
-        lsb_release -is
-        lsb_release -sr
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
@@ -49,8 +47,8 @@ jobs:
         git remote set-branches --add origin master
 
       # allow debugging via tmate
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v1
+      #- name: Setup tmate session
+      #uses: mxschmitt/action-tmate@v1
 
     - name: Build BioDynaMo
       shell: bash
