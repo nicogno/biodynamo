@@ -62,12 +62,14 @@ jobs:
       working-directory: build
 
     - name: Create BioDynaMo archive
+      if: github.event.action == 'published'
       shell: bash
       run: |
         mkdir artifact
         7z a artifact/biodynamo-mac.zip ./build
 
     - name: Upload BioDynaMo archive
+      if: github.event.action == 'published'
       uses: actions/upload-artifact@v1
       with:
         name: biodynamo-binary-archives
