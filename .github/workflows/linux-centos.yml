@@ -61,6 +61,8 @@ jobs:
         g++ -v
         cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
           -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_C_COMPILER=gcc \
           -B build
         cmake --build build --parallel --config Release
 
