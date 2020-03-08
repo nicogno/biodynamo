@@ -23,10 +23,11 @@ jobs:
         rpm -U --quiet p7zip-16.02-10.el7.x86_64.rpm
         rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
         yum -y install centos-release-scl epel-release
-        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install wget libXt-devel libXext-devel ninja-build make \
           devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel
-        yum remove git* perl-Git*
+        yum remove git
+        yum remove perl-Git
+        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum install -y git222-all
         yum install -y @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
