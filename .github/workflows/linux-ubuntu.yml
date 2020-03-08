@@ -22,9 +22,14 @@ jobs:
         export PATH="$HOME/.pyenv/bin:$PATH"
         eval "$(pyenv init -)"
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
+        pyenv shell 3.6.9
 
-    - uses: actions/checkout@v2
-    - run: |
+    - name: Checkout BioDynaMo
+      uses: actions/checkout@v2
+
+    - name: Get BioDynaMo git version history
+      shell: bash
+      run: |
         git fetch --unshallow
         git fetch --tags origin
         git remote set-branches --add origin master
