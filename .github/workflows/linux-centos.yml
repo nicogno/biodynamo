@@ -37,15 +37,6 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
-        ls /etc/scl/conf
-        ls -l /etc/profile.d/modules.sh
-        . scl_source enable devtoolset-7 || true
-        which g++
-        g++ -v
-        . /etc/profile.d/modules.sh || true
-        module avail
-        module load mpi
-        module list
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
@@ -67,8 +58,6 @@ jobs:
         . scl_source enable devtoolset-7 || true
         . /etc/profile.d/modules.sh || true
         module load mpi
-        which g++
-        g++ -v
         cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
           -DCMAKE_BUILD_TYPE=Release \
           -B build
@@ -77,7 +66,7 @@ jobs:
     - name: Test BioDynaMo
       shell: bash
       run: |
-        . bin/thisbdm.sh
+        . bin/thisbdm.sh || true
         bin/biodynamo-unit-tests
       working-directory: build
 
