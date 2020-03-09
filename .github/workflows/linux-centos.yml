@@ -25,7 +25,7 @@ jobs:
         yum -y install centos-release-scl epel-release
         yum -y install wget environment-modules libXt-devel libXext-devel ninja-build make \
           devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel redhat-lsb-core \
-          centos-release-scl which
+          scl-utils which
         yum -y install @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
         curl https://pyenv.run | bash
