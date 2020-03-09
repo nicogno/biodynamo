@@ -36,6 +36,7 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
+        source /etc/profile.d/modules.sh
         module load mpi
         . scl_source enable devtoolset-7
         which g++
