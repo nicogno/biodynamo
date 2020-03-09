@@ -22,8 +22,9 @@ jobs:
         curl -L -O https://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/p7zip-plugins-16.02-10.el7.x86_64.rpm
         rpm -U --quiet p7zip-16.02-10.el7.x86_64.rpm
         rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
+        yum -y update
         yum -y install centos-release-scl epel-release
-        yum -y install wget environment-modules libXt-devel libXext-devel ninja-build make \
+        yum -y install man wget environment-modules libXt-devel libXext-devel ninja-build make \
           devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel redhat-lsb-core \
           scl-utils which
         yum -y install @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
@@ -36,12 +37,15 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
+        ls /etc/scl/conf
+        ls -l /etc/profile.d/modules.sh
         . scl_source enable devtoolset-7
         which g++
         g++ -v
         . /etc/profile.d/modules.sh
         module avail
         module load mpi
+        module list
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
