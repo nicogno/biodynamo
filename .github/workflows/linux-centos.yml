@@ -24,7 +24,7 @@ jobs:
         rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
         yum -y install centos-release-scl epel-release
         yum -y install wget libXt-devel libXext-devel ninja-build make \
-          devtoolset-8-gcc* numactl-devel openmpi3-devel freeglut-devel redhat-lsb-core \
+          devtoolset-7-gcc* numactl-devel openmpi3-devel freeglut-devel redhat-lsb-core \
           centos-release-scl which
         yum -y install @development zlib-devel bzip2 bzip2-devel readline-devel sqlite \
           sqlite-devel openssl-devel xz xz-devel libffi-devel findutils
@@ -36,6 +36,9 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
+        module load mpi
+        . scl_source enable devtoolset-7
+        which g++
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
@@ -54,13 +57,10 @@ jobs:
     - name: Build BioDynaMo
       shell: bash
       run: |
-        . scl_source enable devtoolset-8
         which g++
         g++ -v
         cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
           -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_CXX_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/g++ \
-          -DCMAKE_C_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/gcc \
           -B build
         cmake --build build --parallel --config Release
 
