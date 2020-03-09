@@ -36,7 +36,7 @@ jobs:
         yum -y remove git*
         yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         yum -y install git222-all
-        scl enable devtoolset-8 bash
+        . scl_source enable devtoolset-8
         which g++
         g++ -v
 
