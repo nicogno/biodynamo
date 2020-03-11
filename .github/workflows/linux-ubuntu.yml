@@ -30,10 +30,19 @@ jobs:
         chmod +x cmake-3.16.4-Linux-x86_64.sh
         sudo ./cmake-3.16.4-Linux-x86_64.sh --skip-license --prefix=/usr/local
         curl https://pyenv.run | bash
-        export PATH="$HOME/.pyenv/bin:$PATH"
+        echo "::add-path::~/.pyenv/bin"
         eval "$(pyenv init -)"
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.9
         pyenv shell 3.6.9
+
+    - name: Install pip packages
+      shell: bash
+      if: matrix.test == 'installation'
+      run: |
+        eval "$(pyenv init -)"
+        pyenv shell 3.6.9
+        PIP_PACKAGES="nbformat jupyter metakernel"
+        pip install --user $PIP_PACKAGES
 
     - name: Checkout BioDynaMo
       uses: actions/checkout@v2
