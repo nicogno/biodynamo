@@ -14,6 +14,14 @@ jobs:
         test: [unit, installation]
     runs-on: ${{ matrix.os }}
     steps:
+    - name: Set envars for installation tests
+      shell: bash
+      if: matrix.test == 'installation'
+      run: |
+        echo "::set-env name=SBML_FLAG::-Dsbml=on"
+        echo "::set-env name=NOTEBOOK_FLAG::-Dnotebooks=on"
+        echo "::set-env name=TEST_OFF::-Dtest=off"
+
     - name: Install dependencies
       run: |
         sudo apt-get install -y libopenmpi-dev libomp5 libomp-dev libnuma-dev freeglut3-dev \
@@ -40,7 +48,13 @@ jobs:
     - name: Build BioDynaMo
       shell: bash
       run: |
-        cmake -G Ninja -Dopencl=OFF -Dparaview=ON \
+        cmake \
+          -G Ninja \
+          -Dopencl=OFF \
+          -Dparaview=ON \
+          ${{ env.SBML_FLAG }} \
+          ${{ env.NOTEBOOK_FLAG }} \
+          ${{ env.TEST_OFF }} \
           -DCMAKE_BUILD_TYPE=Release \
           -B build
         cmake --build build --parallel --config Release
