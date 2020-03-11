@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04]
+        install: [true, false]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Install dependencies
@@ -44,12 +45,22 @@ jobs:
           -B build
         cmake --build build --parallel --config Release
 
-    - name: Test BioDynaMo
+    - name: Unit tests BioDynaMo
       shell: bash
+      if: matrix.install == 'false'
+      working-directory: build
       run: |
         . bin/thisbdm.sh
         bin/biodynamo-unit-tests
-      working-directory: build
+
+    - name: Installation tests BioDynaMo
+      shell: bash
+      if: matrix.install == 'true'
+      run: |
+        export DISPLAY=:99.0
+        util/xvfb-initd.sh start
+        test/installation-test.sh
+        util/xvfb-initd.sh stop
 
     - name: Create BioDynaMo archive
       if: github.event.action == 'published'
