@@ -57,6 +57,7 @@ jobs:
       shell: bash
       if: matrix.test == 'installation'
       run: |
+        . bin/thisbdm.sh
         export DISPLAY=:99.0
         util/xvfb-initd.sh start
         test/system-test.sh
