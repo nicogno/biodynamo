@@ -59,7 +59,7 @@ jobs:
       run: |
         export DISPLAY=:99.0
         util/xvfb-initd.sh start
-        test/installation-test.sh
+        test/system-test.sh
         util/xvfb-initd.sh stop
 
     - name: Build biodynamo.org
