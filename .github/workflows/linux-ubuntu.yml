@@ -60,6 +60,8 @@ jobs:
         . build/bin/thisbdm.sh
         export DISPLAY=:99.0
         util/xvfb-initd.sh start
+        git config --system user.name "Test User"
+        git config --system user.email user@test.com
         test/system-test.sh
         util/xvfb-initd.sh stop
 
